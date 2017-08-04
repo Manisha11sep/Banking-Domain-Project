@@ -21,6 +21,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.junit.Assert;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
@@ -73,82 +74,67 @@ public class loginVerification {
 	
 	
 	
-	public static void loginVerifyFromExcel() 
+	public static void loginVerifyFromExcel() throws Exception 
 	{
-			try {
-				String[][] testData = Utility.readingFile(Utility.FILE_PATH);
-						
-				//driver.get(Utility.BASE_URL);
-					String username, password;
-					username = testData[1][0];
-					String username1 = testData[1][1];
-					
-
-					for(int i=1; i<= testData.length; i++)
-					{
-						username = testData[i][0];
-						password = testData[i][1];
-						System.out.println("User name is " + username);
-						System.out.println("Password is " + password);
-						setup();
-						
-						driver.findElement(By.name("uid")).sendKeys(username);
-						driver.findElement(By.name("password")).sendKeys(password);
-						driver.findElement(By.name("btnLogin")).click();
-						
-						String Welcome = driver.findElement(By.xpath("//marquee")).getText();
-						if(Welcome.contains("Welcome"))
-								{
-							System.out.println("Test case passed. Login successfully");
-							
-						}
-						else
-						{
-							System.out.println("Test case failed");
-						}
-					}
-					}
-						
-						/*Alert alt =driver.switchTo().alert();
-						String actualBoxtitle = alt.getText();
-						alt.accept();
-						if(actualBoxtitle.contains(Utility.EXPECT_ERROR))
-						{
-							System.out.println("Test case is Passed");
-							
-						}
-						else
-						{
-							System.out.println("Test case is failed");
-							
-						}
-						String actualTitle = driver.getTitle();
-						if(actualTitle == Utility.EXPECT_TITLE)
-						{
-						
-					System.out.println("Test case passed. Login successfully");
-						
-					}
-					else
-					{
-						System.out.println("Test case failed");
-					}
-					}
-			}
-			catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 			
-			 //driver.close();
+					String[][] testData = Utility.readingFile(Utility.FILE_PATH);
+							
+					
+						String username, password;
+						username = testData[1][0];
+						String username1 = testData[1][1];
+						
+
+						for(int i=1; i< testData.length; i++)
+						{
+							username = testData[i][0];
+							password = testData[i][1];
+							System.out.println("User name is " + username);
+							System.out.println("Password is " + password);
+							setup();
+							
+							driver.findElement(By.name("uid")).sendKeys(username);
+							driver.findElement(By.name("password")).sendKeys(password);
+							driver.findElement(By.name("btnLogin")).click();
+							try
+							{
+						Alert alt =driver.switchTo().alert();
+							String actualBoxtitle = alt.getText();
+							alt.accept();
+							if(actualBoxtitle.contains(Utility.EXPECT_ERROR))
+							{
+								System.out.println("User name and password is incorrect");
+								
+							}
+					
+							else
+							{
+								System.out.println("Test case failed");
+							}
+							}
+							catch(NoAlertPresentException Ex)
+							{
+							String	actualTitle = driver.getTitle();
+							 if(actualTitle.contains(Utility.EXPECT_TITLE))
+							{
+
+								System.out.println("Test case passed. Login successfully");
+							
+							}
+							else
+							{
+								System.out.println("test case is failed");
+							}
+							}
+driver.close();			
+					
+						}
 	}
-				*/
-				
 		
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
-	public static void main(String[] args)  {
+	public static void main(String[] args) throws Exception  {
 		// Code to test the login page//
 		
 		loginVerifyFromExcel();
