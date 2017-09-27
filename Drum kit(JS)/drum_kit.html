@@ -1,0 +1,71 @@
+<html>
+<head>
+	<link rel="stylesheet" href="drum_kit.css">
+	<script>
+function playSound(e){
+
+	  console.log(e.keyCode);
+		const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+	  const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
+		console.log(audio);
+		console.log(key)//printing the key
+		audio.currentTime=0; //rewind the start
+		audio.play();
+		key.classList.add('playing');
+	}
+
+	function removeTransition(e)
+	{
+		if (e.propertyName !=='transform') return;
+		this.classList.remove('playing');
+	}
+  const keys = document.querySelectorAll('.key');
+	keys.forEach( key=> key.addEventListener('transitioned'. removeTransition));
+	window.addEventListener('keydown', playSound);
+	</script>
+</head>
+<body>
+
+
+
+<div data-key ="65" class="key">
+	<kbd> A </kbd>
+	<span class="sound"> Clap </span>
+</div>
+<div data-key ="83" class="key">
+	<kbd> S </kbd>
+	<span class="sound"> Kick </span>
+</div>
+<div data-key ="68" class="key">
+	<kbd> D </kbd>
+	<span class="sound"> Horn </span>
+</div>
+<div data-key ="70" class="key">
+	<kbd> F </kbd>
+	<span class="sound"> Tom </span>
+</div>
+<audio data-key="65" src="http://res.cloudinary.com/sabbirrahman/video/upload/v1502694157/clap_zzxlfj.wav"></audio>
+<audio data-key="83" src="http://res.cloudinary.com/sabbirrahman/video/upload/v1502694157/hihat_epvrsa.wav"></audio>
+<audio data-key="68" src="http://res.cloudinary.com/sabbirrahman/video/upload/v1502694157/kick_uop9oa.wav"></audio>
+<audio data-key="70" src="http://res.cloudinary.com/sabbirrahman/video/upload/v1502694159/openhat_wxy6w1.wav"></audio>
+<audio data-key="66" src="http://res.cloudinary.com/sabbirrahman/video/upload/v1502694158/boom_f5o8rw.wav"></audio>
+<audio data-key="82" src="http://res.cloudinary.com/sabbirrahman/video/upload/v1502694161/ride_yxqwmi.wav"></audio>
+<audio data-key="83" src="http://res.cloudinary.com/sabbirrahman/video/upload/v1502694158/snare_zoc0b6.wav"></audio>
+<audio data-key="84" src="http://res.cloudinary.com/sabbirrahman/video/upload/v1502694159/tom_fjbgop.wav"></audio>
+<audio data-key="76" src="http://res.cloudinary.com/sabbirrahman/video/upload/v1502694158/tink_qufq8u.wav"></audio>
+
+</body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</html>
